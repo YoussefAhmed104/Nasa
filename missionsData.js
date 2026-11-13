@@ -10,7 +10,7 @@ export const solarSystemData = [
     angle: -10,
     radius: 0.62,
     color: "#b7a294",
-    texture: "rocky",
+    texture: "mercury",
     rotation: 0.12,
     missions: [
       { id: "messenger", name: "MESSENGER", title: "MESSENGER Orbiter", type: "ORBITER / IMPACT", year: "2004 — 2015", status: "HISTORIC ARTIFACT", agency: "NASA / APL", latitude: 18, longitude: 15, summary: "After mapping Mercury for four years, MESSENGER ended its mission by impacting the planet's surface.", location: "CALORIS BASIN", telemetry: "4,104 ORBITS" }
@@ -90,7 +90,7 @@ export const solarSystemData = [
     texture: "saturn",
     rotation: 0.22,
     // Keep Saturn's globe and ring system slightly understated in both overview and close-up.
-    visualScale: 0.80,
+    visualScale: 0.60,
     hasRings: true,
     missions: [
       { id: "cassini", name: "CASSINI", title: "Cassini Orbiter", type: "ORBITER / DEBRIS", year: "1997 — 2017", status: "MISSION DEBRIS", agency: "NASA / ESA / ASI", latitude: 0, longitude: 90, summary: "After 13 years exploring Saturn, Cassini made a deliberate final plunge into the planet's atmosphere.", location: "SATURN ATMOSPHERE", telemetry: "294 SATURN ORBITS" }
@@ -127,3 +127,17 @@ export const solarSystemData = [
     ]
   }
 ];
+
+/* Lunar surface records are kept separate from the eight-planet catalog for Moon navigation. */
+export const moonData = {
+  name: "Moon",
+  category: "NATURAL SATELLITE",
+  descriptor: "EARTH'S MOON",
+  distance: "384,400 KM FROM EARTH",
+  radius: 0.27,
+  missions: [
+    { id: "apollo11", name: "APOLLO 11", title: "Apollo 11 Landing Site", type: "HISTORIC LANDING", year: "1969", status: "HISTORIC ARTIFACT", agency: "NASA", latitude: 0.6741, longitude: 23.473, summary: "The Sea of Tranquility landing site marks humanity's first crewed landing on another world.", location: "MARE TRANQUILLITATIS", telemetry: "FIRST CREWED LUNAR LANDING" },
+    { id: "luna2", name: "LUNA 2", title: "Luna 2 Impact Region", type: "PROBE / IMPACT SITE", year: "1959", status: "HISTORIC ARTIFACT", agency: "SOVIET SPACE PROGRAM", latitude: 29.1, longitude: -0.1, summary: "The first human-made object to reach the Moon, impacting near the boundary of Mare Imbrium and Mare Serenitatis.", location: "PALUS PUTREDINIS", telemetry: "FIRST LUNAR IMPACT" },
+    { id: "change4", name: "CHANG'E 4", title: "Chang'e 4 Lander & Yutu-2", type: "LANDER / ROVER", year: "2019 — PRESENT", status: "ACTIVE", agency: "CNSA", latitude: -45.4446, longitude: 177.5991, summary: "The first soft landing on the lunar far side, exploring the Von Kármán crater with the Yutu-2 rover.", location: "VON KÁRMÁN CRATER", telemetry: "LUNAR FAR SIDE" }
+  ]
+};

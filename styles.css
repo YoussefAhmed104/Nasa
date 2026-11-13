@@ -180,6 +180,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid #d5c5ff; outline-offs
   pointer-events: auto;
   transition: opacity .2s, color .2s, border-color .2s, background .2s;
 }
+.planet-label[data-planet="Moon"] { transform: translate(-50%, 58px); }
 .planet-label:hover { color: white; }
 .planet-label small { display: block; margin-top: 3px; color: #9992aa; font-size: 6px; letter-spacing: .07em; }
 .planet-label.is-hot { color: #f4eaff; border-color: rgba(206, 185, 255, .3); background: rgba(22, 18, 38, .72); }

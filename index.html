@@ -22,7 +22,7 @@
 <body>
   <main class="experience" id="experience">
     <!-- The full-viewport WebGL canvas contains the solar system, planets, stars, and 3D surface pins. -->
-    <canvas id="solarCanvas" aria-label="Interactive three-dimensional solar system. Select a planet to travel there."></canvas>
+    <canvas id="solarCanvas" aria-label="Interactive three-dimensional solar system. Select a planet or the Moon to travel there."></canvas>
 
     <!-- Atmospheric CSS nebula and dust sit behind the Three.js renderer for layered depth. -->
     <div class="cosmic-atmosphere" aria-hidden="true">
@@ -62,7 +62,7 @@
     </header>
 
     <!-- Projected label elements stay aligned with their corresponding 3D planet meshes. -->
-    <div class="planet-label-layer" id="planetLabels" aria-hidden="true"></div>
+    <nav class="planet-label-layer" id="planetLabels" aria-label="Planet navigation"></nav>
 
     <!-- Projected mission buttons follow their surface anchors as each selected planet rotates. -->
     <div class="hotspot-layer" id="hotspotLayer" aria-label="Mission and artifact points of interest"></div>
@@ -107,7 +107,7 @@
 
     <!-- The bottom HUD provides context without competing with the planetary canvas. -->
     <footer class="bottom-hud">
-      <div class="hud-instruction" id="hudInstruction"><span class="hud-crosshair">⌖</span><span><b>SELECT A WORLD</b><small>Click any planet to travel through space</small></span></div>
+      <div class="hud-instruction" id="hudInstruction"><span class="hud-crosshair">⌖</span><span><b>SELECT A WORLD</b><small>Click a planet or its Moon to travel through space</small></span></div>
       <div class="hud-center"><span class="hud-live"><i></i> LIVE SOLAR SYSTEM</span><span class="hud-divider"></span><span id="hudArtifactCount">47 KNOWN ARTIFACTS</span></div>
       <div class="hud-coordinate" id="hudCoordinate"><span>LONGITUDE</span><b>0° 00′ 00″</b><span class="hud-coordinate-divider">/</span><span>MISSION ARCHIVE ONLINE</span></div>
     </footer>
