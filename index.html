@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#070711">
+  <meta name="description" content="Travel through a living 3D solar system and discover humanity's legacy among the stars.">
+  <title>SPACE LEGACY — A Museum Beyond Earth</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.171.0/build/three.module.js"
+      }
+    }
+  </script>
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <main class="experience" id="experience">
+    <!-- The full-viewport WebGL canvas contains the solar system, planets, stars, and 3D surface pins. -->
+    <canvas id="solarCanvas" aria-label="Interactive three-dimensional solar system. Select a planet to travel there."></canvas>
+
+    <!-- Atmospheric CSS nebula and dust sit behind the Three.js renderer for layered depth. -->
+    <div class="cosmic-atmosphere" aria-hidden="true">
+      <div class="nebula nebula-violet"></div>
+      <div class="nebula nebula-blue"></div>
+      <div class="nebula nebula-amber"></div>
+      <div class="atmosphere-grain"></div>
+    </div>
+
+    <!-- Minimal top navigation floats above the full-screen solar system. -->
+    <header class="topbar">
+      <a class="brand" href="#" data-action="home" aria-label="Space Legacy home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 42 42" fill="none">
+            <path d="M25.8 5.2a15.7 15.7 0 1 0 11 25.9A16.8 16.8 0 0 1 25.8 5.2Z" stroke="currentColor" stroke-width="1.5"/>
+            <ellipse cx="22" cy="21" rx="19" ry="7" transform="rotate(-32 22 21)" stroke="currentColor" stroke-width="1.2"/>
+            <circle cx="34.2" cy="10" r="2" fill="#ffb985"/>
+          </svg>
+        </span>
+        <span class="brand-copy"><strong>SPACE <b>LEGACY</b></strong><small>A MUSEUM BEYOND EARTH</small></span>
+      </a>
+
+      <nav class="system-nav" aria-label="Experience navigation">
+        <span class="nav-state"><i></i><span id="navLocation">SOL SYSTEM</span></span>
+        <span class="nav-divider"></span>
+        <span class="nav-caption">A HUMANITY-SCALE ARCHIVE</span>
+      </nav>
+
+      <div class="top-actions">
+        <button class="back-button" id="backButton" type="button" aria-label="Back to Solar System">
+          <span aria-hidden="true">←</span> SOLAR SYSTEM
+        </button>
+        <button class="icon-button" id="archiveButton" type="button" aria-label="Open mission archive">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 5.5h16v14H4zM3 3.5h18v3H3zM8 10h8M8 13h8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Projected label elements stay aligned with their corresponding 3D planet meshes. -->
+    <div class="planet-label-layer" id="planetLabels" aria-hidden="true"></div>
+
+    <!-- Projected mission buttons follow their surface anchors as each selected planet rotates. -->
+    <div class="hotspot-layer" id="hotspotLayer" aria-label="Mission and artifact points of interest"></div>
+
+    <!-- The planet title is shown only in close-up inspection mode. -->
+    <div class="planet-ident" id="planetIdent">
+      <span class="ident-overline"><i></i><span id="planetIndex">WORLD 04</span><i></i></span>
+      <h1 id="planetName">MARS</h1>
+      <p id="planetDescriptor">THE RED PLANET <span>·</span> 1.52 AU FROM THE SUN</p>
+    </div>
+
+    <!-- The mission card presents telemetry for the selected surface marker. -->
+    <article class="mission-card" id="missionCard" aria-live="polite" aria-hidden="true">
+      <button class="card-close" id="closeMissionCard" type="button" aria-label="Close mission details">×</button>
+      <div class="card-eyebrow"><span class="card-status"></span><span id="missionStatus">HISTORIC ARTIFACT</span></div>
+      <div class="card-orbit-icon" aria-hidden="true">⌖</div>
+      <p class="card-agency" id="missionAgency">NASA / JPL</p>
+      <h2 id="missionTitle">Opportunity Rover</h2>
+      <p class="mission-meta"><span id="missionYear">2004 — 2018</span><i></i><span id="missionType">ROVER</span></p>
+      <p class="mission-summary" id="missionSummary"></p>
+      <div class="telemetry-grid">
+        <div><small>LOCATION</small><span id="missionLocation"></span></div>
+        <div><small>MISSION</small><span id="missionTelemetry"></span></div>
+      </div>
+      <div class="card-foot"><span>ARCHIVE SIGNAL <i></i> VERIFIED</span><span id="missionId">SL—004</span></div>
+    </article>
+
+    <!-- The archive is a small overlay for quickly entering a planet with known artifacts. -->
+    <section class="archive-panel" id="archivePanel" aria-label="Mission archive" aria-hidden="true">
+      <button class="card-close" id="closeArchive" type="button" aria-label="Close mission archive">×</button>
+      <div class="archive-kicker"><span></span> SOLAR LEGACY INDEX</div>
+      <h2>MISSION <em>ARCHIVE</em></h2>
+      <p class="archive-intro">Choose a recorded world to enter its orbit.</p>
+      <div class="archive-worlds" id="archiveWorlds"></div>
+    </section>
+
+    <!-- A luminous transition veil accompanies the 3D warp streaks during travel. -->
+    <div class="warp-flash" id="warpFlash" aria-hidden="true">
+      <div class="warp-vignette"></div>
+      <p>TRAVELLING TO <b id="warpDestination">MARS</b></p>
+    </div>
+
+    <!-- The bottom HUD provides context without competing with the planetary canvas. -->
+    <footer class="bottom-hud">
+      <div class="hud-instruction" id="hudInstruction"><span class="hud-crosshair">⌖</span><span><b>SELECT A WORLD</b><small>Click any planet to travel through space</small></span></div>
+      <div class="hud-center"><span class="hud-live"><i></i> LIVE SOLAR SYSTEM</span><span class="hud-divider"></span><span id="hudArtifactCount">47 KNOWN ARTIFACTS</span></div>
+      <div class="hud-coordinate" id="hudCoordinate"><span>LONGITUDE</span><b>0° 00′ 00″</b><span class="hud-coordinate-divider">/</span><span>MISSION ARCHIVE ONLINE</span></div>
+    </footer>
+
+    <!-- A compact loading message remains visible until WebGL and the planetary models are ready. -->
+    <div class="loading-state" id="loadingState" role="status"><span class="loading-orbit"></span><span>CALIBRATING THE STARS</span></div>
+
+    <!-- This accessible notice explains when WebGL could not initialize. -->
+    <div class="error-state" id="errorState" role="alert" hidden>
+      <strong>THE OBSERVATORY IS OFFLINE</strong>
+      <span>Enable WebGL and reload to explore the solar system.</span>
+    </div>
+  </main>
+</body>
+</html>
